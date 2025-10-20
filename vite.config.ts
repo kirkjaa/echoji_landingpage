@@ -5,16 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
-    port: 5000,
-    allowedHosts: [
-      'echoji.co',
-      'www.echoji.co',
-      '.echoji.co'
-    ]
+    port: 5000
   },
   preview: {
-    host: '0.0.0.0',
-    port: 8888,
     allowedHosts: [
       'echoji.co',
       'www.echoji.co',
