@@ -2,12 +2,18 @@ version: '3.8'
 
 services:
   echoji-frontend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: echoji
+    restart: unless-stopped
     ports:
       - "8888:8888"
-    volumes:
-      - .:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=production
-    command: npx vite preview --host 0.0.0.0 --port 8888
+    networks:
+      - echoji-network
+
+networks:
+  echoji-network:
+    driver: bridge

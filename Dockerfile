@@ -1,23 +1,25 @@
-# Use Node.js 18 alpine image as base
-FROM node:18-alpine
+# Multi-stage build for smaller production image
+FROM node:18-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
 
-# Install dependencies
-RUN npm install
-
-# Copy all files
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Expose port 8888
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+
 EXPOSE 8888
 
-# Start the application using Vite's preview server
+ENV NODE_ENV=production
+
 CMD ["npx", "vite", "preview", "--host", "0.0.0.0", "--port", "8888"]
