@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import EchojiCloud from './EchojiCloud';
 import ConfessionForm from './ConfessionForm';
 
 const Hero = () => {
-  const [submittedGlyph, setSubmittedGlyph] = useState(null);
+  const [submittedGlyph, setSubmittedGlyph] = useState<string | null>(null);
 
-  const handleRelease = (glyph) => {
+  const handleRelease = (glyph: string) => {
     setSubmittedGlyph(glyph);
     setTimeout(() => setSubmittedGlyph(null), 4000); // Let the new glyph animate for a bit
   };

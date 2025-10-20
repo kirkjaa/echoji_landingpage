@@ -1,0 +1,43 @@
+WARN[0000] /root/echojilandingpage/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] Building 13.9s (11/14)                                                                                                                                                               
+ => [internal] load local bake definitions                                                                                                                                          0.0s
+ => => reading from stdin 555B                                                                                                                                                      0.0s
+ => [internal] load build definition from Dockerfile                                                                                                                                0.0s
+ => => transferring dockerfile: 522B                                                                                                                                                0.0s
+ => [internal] load metadata for docker.io/library/node:18-alpine                                                                                                                   0.4s
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 222B                                                                                                                                                   0.0s
+ => [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e                                                     0.0s
+ => [internal] load build context                                                                                                                                                   0.0s
+ => => transferring context: 2.66kB                                                                                                                                                 0.0s
+ => CACHED [builder 2/6] WORKDIR /app                                                                                                                                               0.0s
+ => CACHED [builder 3/6] COPY package*.json ./                                                                                                                                      0.0s
+ => [builder 4/6] RUN npm ci && npm cache clean --force                                                                                                                             8.8s
+ => [builder 5/6] COPY . .                                                                                                                                                          0.0s 
+ => ERROR [builder 6/6] RUN npm run build                                                                                                                                           4.5s 
+------                                                                                                                                                                                   
+ > [builder 6/6] RUN npm run build:                                                                                                                                                      
+0.520                                                                                                                                                                                    
+0.520 > echoji-landing@0.0.0 build                                                                                                                                                       
+0.520 > tsc && vite build
+0.520 
+4.319 src/components/Hero.tsx(2,18): error TS6133: 'AnimatePresence' is declared but its value is never read.
+4.319 src/components/Hero.tsx(9,26): error TS7006: Parameter 'glyph' implicitly has an 'any' type.
+------
+Dockerfile:10
+
+--------------------
+
+   8 |     
+
+   9 |     COPY . .
+
+  10 | >>> RUN npm run build
+
+  11 |     
+
+  12 |     # Production stage
+
+--------------------
+
+failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 2
