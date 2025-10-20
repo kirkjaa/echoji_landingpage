@@ -1,0 +1,43 @@
+[+] Building 6.2s (11/14)                                                                                                                                                                
+ => [internal] load local bake definitions                                                                                                                                          0.0s
+ => => reading from stdin 555B                                                                                                                                                      0.0s
+ => [internal] load build definition from Dockerfile                                                                                                                                0.0s
+ => => transferring dockerfile: 536B                                                                                                                                                0.0s
+ => [internal] load metadata for docker.io/library/node:18-alpine                                                                                                                   0.8s
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 222B                                                                                                                                                   0.0s
+ => [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e                                                     0.0s
+ => [internal] load build context                                                                                                                                                   0.1s
+ => => transferring context: 582.47kB                                                                                                                                               0.0s
+ => CACHED [builder 2/6] WORKDIR /app                                                                                                                                               0.0s
+ => [builder 3/6] COPY package*.json ./                                                                                                                                             0.0s
+ => [builder 4/6] RUN npm ci --only=production && npm cache clean --force                                                                                                           4.4s
+ => [builder 5/6] COPY . .                                                                                                                                                          0.0s 
+ => ERROR [builder 6/6] RUN npm run build                                                                                                                                           0.6s 
+------                                                                                                                                                                                   
+ > [builder 6/6] RUN npm run build:                                                                                                                                                      
+0.527                                                                                                                                                                                    
+0.527 > echoji-landing@0.0.0 build                                                                                                                                                       
+0.527 > tsc && vite build
+0.527 
+0.535 sh: tsc: not found
+------
+Dockerfile:10
+
+--------------------
+
+   8 |     
+
+   9 |     COPY . .
+
+  10 | >>> RUN npm run build
+
+  11 |     
+
+  12 |     # Production stage
+
+--------------------
+
+failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 127
+
+root@whatnot-quest:~/echojilandingpage# 
