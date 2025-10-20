@@ -8,10 +8,9 @@ export default defineConfig({
     port: 5000
   },
   preview: {
-    allowedHosts: [
-      'echoji.co',
-      'www.echoji.co',
-      '.echoji.co'
-    ]
+    host: '0.0.0.0',
+    port: 8888,
+    strictPort: true,
+    allowedHosts: true  // This allows ALL hosts
   }
 })
