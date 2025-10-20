@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GLYPH_PATHS } from '../lib/glyphs';
 
-const ConfessionForm = ({ onRelease }) => {
+interface ConfessionFormProps {
+  onRelease: (glyph: string) => void;
+}
+
+const ConfessionForm = ({ onRelease }: ConfessionFormProps) => {
   const [text, setText] = useState('');
   const [isReleased, setIsReleased] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim() === '') return;
 

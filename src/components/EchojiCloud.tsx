@@ -4,7 +4,7 @@ import { GLYPH_PATHS } from '../lib/glyphs';
 
 const getRandomGlyph = () => GLYPH_PATHS[Math.floor(Math.random() * GLYPH_PATHS.length)];
 
-const generateInitialGlyphs = (count, layer = 0) => {
+const generateInitialGlyphs = (count: number, layer: number = 0) => {
   // Different parameters for different layers to create parallax effect
   const layerParams = [
     { scaleRange: [0.2, 0.4], opacityRange: [0.1, 0.3], speedFactor: 1.0 },     // Background layer
@@ -28,7 +28,20 @@ const generateInitialGlyphs = (count, layer = 0) => {
   }));
 };
 
-const FloatingGlyph = ({ glyph }) => {
+interface GlyphData {
+  id: string;
+  path: string;
+  x: number;
+  y: number;
+  scale: number;
+  opacity: number;
+  duration: number;
+  rotate: number;
+  layer: number;
+  speedFactor: number;
+}
+
+const FloatingGlyph = ({ glyph }: { glyph: GlyphData }) => {
   const { id, path, x, y, scale, opacity, duration, rotate, layer, speedFactor } = glyph;
 
   // Different colors for different layers to create depth
@@ -64,13 +77,13 @@ const FloatingGlyph = ({ glyph }) => {
       }
     },
     drift: {
-      x: [null, `${x + (Math.random() - 0.5) * 10 * speedFactor}vw`, `${x}vw`],
-      y: [null, `${y + (Math.random() - 0.5) * 15 * speedFactor}vh`, `${y}vh`],
-      rotate: [null, rotate + (Math.random() - 0.5) * 40 * speedFactor, rotate],
+      x: [`${x}vw`, `${x + (Math.random() - 0.5) * 10 * speedFactor}vw`, `${x}vw`],
+      y: [`${y}vh`, `${y + (Math.random() - 0.5) * 15 * speedFactor}vh`, `${y}vh`],
+      rotate: [rotate, rotate + (Math.random() - 0.5) * 40 * speedFactor, rotate],
       transition: {
         duration,
         repeat: Infinity,
-        repeatType: 'mirror',
+        repeatType: 'mirror' as const,
         ease: 'easeInOut',
       },
     },
@@ -88,7 +101,7 @@ const FloatingGlyph = ({ glyph }) => {
       transition: {
         duration: 4,
         repeat: Infinity,
-        repeatType: 'reverse',
+        repeatType: 'reverse' as const,
         ease: 'easeInOut',
         delay: Math.random() * 2
       }
@@ -156,7 +169,11 @@ const FloatingGlyph = ({ glyph }) => {
   );
 };
 
-const EchojiCloud = ({ newGlyph }) => {
+interface EchojiCloudProps {
+  newGlyph: string | null;
+}
+
+const EchojiCloud = ({ newGlyph }: EchojiCloudProps) => {
   // Generate glyphs for multiple layers
   const initialGlyphs = useMemo(() => {
     const backgroundLayer = generateInitialGlyphs(15, 0);  // Background layer
